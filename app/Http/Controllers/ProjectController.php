@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Http\Controllers\RotaotrController;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
 
 
 class ProjectController extends Controller
@@ -17,11 +14,12 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $urls = Project::all();
+        $table_id = $request->get('table_id');
 
-        return view('projects.index', compact('urls'));
+        return view('projects.index', compact('urls', 'table_id'));
     }
 
     /**
@@ -29,9 +27,10 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('projects.create');
+        $table_id = $request->get('table_id');
+        return view('projects.create', compact('table_id'));
     }
 
     /**
@@ -45,15 +44,17 @@ class ProjectController extends Controller
 
         $request->validate([
             'link' => 'required',
+            'table_id' => 'required',
             'hw' => 'required',
             'ch' => 'required',
             'hr' => 'required'
         ]);
 
         Project::create($request->all());
+        $table_id = $request->get('table_id');
 
-        return redirect()->route('projects.index')
-            ->with('success', 'Project created successfully.');
+        return redirect()->route('projects.index', ['gid' => $table_id])
+            ->with('success', 'Link added successfully.');
     }
 
     /**
@@ -73,9 +74,10 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function edit(Project $project)
+    public function edit(Project $project, Request $request)
     {
-        return view('projects.edit', compact('project'));
+        $table_id = $request->get('table_id');
+        return view('projects.edit', compact('project', 'table_id'));
     }
 
     /**
@@ -95,8 +97,11 @@ class ProjectController extends Controller
         ]);
         $project->update($request->all());
 
-        return redirect()->route('projects.index')
-            ->with('success', 'Project updated successfully');
+        $table_id = $request->get("table_id");
+        //dd($table_id);
+
+        return redirect()->route('projects.index', ['table_id' => $table_id])
+            ->with('success', 'Link details updated successfully');
     }
 
     /**
@@ -105,12 +110,13 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy(Project $project, Request $request)
     {
 
         $project->delete();
+        $table_id = $request->get('table_id');
 
-        return redirect()->route('projects.index')
-            ->with('success', 'Project deleted successfully');
+        return redirect()->back()
+            ->with('success', 'Link deleted successfully');
     }
 }

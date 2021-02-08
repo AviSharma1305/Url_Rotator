@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Project;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +20,24 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 
 Route::get('/', function() {
-    return view('home');
-})->name('home')->middleware('auth');
+    return Redirect::to("/tables");
+})->middleware('auth');
 
-
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource("tables", TableController::class);
     Route::resource("projects", ProjectController::class);
     Route::resource("/redirect", RotatorController::class);
 });
+
+// Route::get('/url/{id}',function($id){  
+//     $url=Project::find($id);  
+//     foreach($url->id as $role)  
+//     {  
+//        return $role->name;  
+//     }  
+//     });  
+
+// Route::group(['middleware' => ['auth']], function() {
+//     Route::resource("projects", ProjectController::class);
+//     Route::resource("/redirect", RotatorController::class);
+// });

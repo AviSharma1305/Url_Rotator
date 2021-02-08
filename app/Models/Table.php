@@ -5,19 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Table extends Model
 {
     use HasFactory;
 
-    protected $table = 'urls';
+    protected $table = 'urlGroups';
     public $timestamps = true;
 
     protected $fillable = [
-        'link',
-        'table_id',
-        'hw',
-        'ch',
-        'hr',
-        'hc'
+        "name"
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

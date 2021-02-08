@@ -9,7 +9,8 @@
                 <h2>Add New Link</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('projects.index') }}" title="Go back"> <i class="fas fa-backward "></i> </a>
+                <a class="btn btn-primary" href="{{ route('projects.index') }}" title="Go back"> <i
+                        class="fas fa-backward "></i> </a>
             </div>
         </div>
     </div>
@@ -24,7 +25,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('projects.store') }}" method="POST" >
+    <form action="{{ route('projects.store') }}" method="POST">
         @csrf
 
         <div class="row">
@@ -34,6 +35,7 @@
                     <input type="text" name="link" class="form-control" placeholder="Link">
                 </div>
             </div>
+            <input type="hidden" name="table_id" value="{{ $table_id }}">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>HW:</strong>
