@@ -53,7 +53,7 @@ class ProjectController extends Controller
         Project::create($request->all());
         $table_id = $request->get('table_id');
 
-        return redirect()->route('projects.index', ['gid' => $table_id])
+        return redirect()->route('projects.index', ['table_id' => $table_id])
             ->with('success', 'Link added successfully.');
     }
 
@@ -63,9 +63,10 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Request $request, Project $project)
     {
-        return view('projects.show', compact('project'));
+        $table_id = $request->get('table_id');
+        return view('projects.show', compact('project','table_id'));
     }
 
     /**
@@ -98,7 +99,6 @@ class ProjectController extends Controller
         $project->update($request->all());
 
         $table_id = $request->get("table_id");
-        //dd($table_id);
 
         return redirect()->route('projects.index', ['table_id' => $table_id])
             ->with('success', 'Link details updated successfully');

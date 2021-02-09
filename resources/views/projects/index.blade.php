@@ -1,19 +1,22 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Link Mgt.</h1>
+    <h1 class="m-0 text-dark">Urls</h1>
 @stop
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('projects.create', ['table_id' => $table_id]) }}"
-                    title="Create a project"> <i class="fas fa-plus-circle"></i>
+        <div class="col-lg-4 hw">
+                <a class="btn btn-primary" href="{{ route('tables.index') }}"
+                    title="Add new url"> <i class="fas fa-backward "></i>
                 </a>
-            </div>
+        </div>
+        <div class="col-lg-4">
+                <a class="btn btn-success" href="{{ route('projects.create', ['table_id' => $table_id]) }}"
+                    title="Add new url"> <i class="fas fa-plus-circle"></i>
+                </a>
         </div>
     </div>
 
@@ -45,7 +48,7 @@
                         <td>
                             <form action="{{ route('projects.destroy', $url->id) }}" method="POST">
 
-                                <a href="{{ route('projects.show', $url->id) }}" title="show" class="btn btn-success"><i
+                                <a href="{{ route('projects.show', ['project' => $url->id, 'table_id' => $table_id]) }}" title="show" class="btn btn-success"><i
                                         class="fa fa-eye"></i></a>
 
                                 <a href="{{ route('projects.edit', ['project' => $url->id, 'table_id' => $table_id]) }}"
